@@ -113,7 +113,7 @@ test.base <- function(t, df, pfunc, qfunc, vars, risk.level=0.05, alternative=c(
     return(NULL)
 }
 
-test.mean.normal <- function(x, mu_0, sd=NULL, risk.level=0.05, alternative="two.sided") {
+test.mean.normal <- function(x, mu_0, sd=NULL, risk.level=0.05, alternative=c("two.sided", "less", "greater")) {
     mu_n <- mean(x)
     n <- length(x)
     cat(sprintf("mu_n = %.5f\n", mu_n))
@@ -127,7 +127,7 @@ test.mean.normal <- function(x, mu_0, sd=NULL, risk.level=0.05, alternative="two
     return(test.mean.normal.base(mu_0, n, mu_n, sd, empirical_sd, risk.level, alternative))
 }
 
-test.mean.normal.base <- function(mu_0, n, mu_n, sd, empirical_sd, risk.level=0.05, alternative="two.sided") {
+test.mean.normal.base <- function(mu_0, n, mu_n, sd, empirical_sd, risk.level=0.05, alternative=c("two.sided", "less", "greater")) {
     t <- (mu_n - mu_0) * sqrt(n) / sd
     cat(sprintf("T(x) = %.5f\n", t))
     
@@ -140,7 +140,7 @@ test.mean.normal.base <- function(mu_0, n, mu_n, sd, empirical_sd, risk.level=0.
     }
 }
 
-test.mean <- function(x, mu_0, sd=NULL, risk.level=0.05, alternative="two.sided") {
+test.mean <- function(x, mu_0, sd=NULL, risk.level=0.05, alternative=c("two.sided", "less", "greater")) {
     alternative <- match.arg(alternative)
     mu_n <- mean(x)
     n <- length(x)
@@ -155,7 +155,7 @@ test.mean <- function(x, mu_0, sd=NULL, risk.level=0.05, alternative="two.sided"
     return(test.mean.base(mu_0, n, mu_n, sd, empirical_sd, risk.level, alternative))
 }
 
-test.mean.base <- function(mu_0, n, mu_n, sd, empirical_sd, risk.level=0.05, alternative="two.sided") {
+test.mean.base <- function(mu_0, n, mu_n, sd, empirical_sd, risk.level=0.05, alternative=c("two.sided", "less", "greater")) {
     alternative <- match.arg(alternative)
     if (empirical_sd) {
         t <- (mu_n - mu_0) * sqrt(n - 1) / sd
@@ -170,7 +170,7 @@ test.mean.base <- function(mu_0, n, mu_n, sd, empirical_sd, risk.level=0.05, alt
     }
 }
 
-test.var <- function(x, var_0, mu=NULL, risk.level=0.05, alternative="two.sided") {
+test.var <- function(x, var_0, mu=NULL, risk.level=0.05, alternative=c("two.sided", "less", "greater")) {
     var_n <- var(x)
     n <- length(x)
     cat(sprintf("var_n = %.5f\n", var_n))
@@ -186,7 +186,7 @@ test.var <- function(x, var_0, mu=NULL, risk.level=0.05, alternative="two.sided"
     }
 }
 
-test.var.base <- function(var_0, n, var_n, mu, risk.level=0.05, alternative="two.sided") {
+test.var.base <- function(var_0, n, var_n, mu, risk.level=0.05, alternative=c("two.sided", "less", "greater")) {
     
     t <- (n-1)*var_n / var_0
     cat(sprintf("T(x) = %.5f\n", t))
@@ -195,7 +195,7 @@ test.var.base <- function(var_0, n, var_n, mu, risk.level=0.05, alternative="two
     return(test.base(t, n-1, pchisq, qchisq, c("var_n", "var_0"), risk.level, alternative))
 }
 
-test.compare_means <- function(x, y, risk.level=0.05, alternative="two.sided") {
+test.compare_means <- function(x, y, risk.level=0.05, alternative=c("two.sided", "less", "greater")) {
     mean_x <- mean(x)
     var_x <- var(x)
     n_x <- length(x)
@@ -207,7 +207,7 @@ test.compare_means <- function(x, y, risk.level=0.05, alternative="two.sided") {
 }
 
 
-test.compare_means.base<- function(n_x, mean_x, var_x, n_y, mean_y, var_y, risk.level=0.05, alternative="two.sided") {
+test.compare_means.base<- function(n_x, mean_x, var_x, n_y, mean_y, var_y, risk.level=0.05, alternative=c("two.sided", "less", "greater")) {
     cat(sprintf("x :: n = %d, mean = %.5f, var = %.5f\n", n_x, mean_x, var_x))
     cat(sprintf("y :: n = %d, mean = %.5f, var = %.5f\n", n_y, mean_y, var_y))
     
@@ -227,7 +227,7 @@ test.compare_means.base<- function(n_x, mean_x, var_x, n_y, mean_y, var_y, risk.
     return(test.base(t, ndf, pt, qt, c("mean_x", "mean_y"), risk.level, alternative))
 }
 
-test.compare_vars <- function(x, y, risk.level=0.05, alternative="two.sided") {
+test.compare_vars <- function(x, y, risk.level=0.05, alternative=c("two.sided", "less", "greater")) {
     var_x <- var(x)
     n_x <- length(x)
     var_y <- var(y)
@@ -245,7 +245,7 @@ pfmod <- function(p, df, lower.tail=TRUE) {
 }
 
 
-test.compare_vars.base<- function(n_x, var_x, n_y, var_y, risk.level=0.05, alternative="two.sided") {
+test.compare_vars.base<- function(n_x, var_x, n_y, var_y, risk.level=0.05, alternative=c("two.sided", "less", "greater")) {
     cat(sprintf("x :: n = %d, var = %.5f\n", n_x, var_x))
     cat(sprintf("y :: n = %d, var = %.5f\n", n_y, var_y))
     
