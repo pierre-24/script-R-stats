@@ -1,4 +1,4 @@
-# Additional functions for confiance intervals and tests, from M.A. Remiche's lecture.
+# Additional functions for confidence intervals and tests, from M.A. Remiche's lecture.
 # By: Pierre Beaujean (April 2019).
 
 # --- CI = confiance interval
